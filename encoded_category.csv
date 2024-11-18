@@ -1,0 +1,102 @@
+,main_category,main_category_encoded,sub_category,sub_category_encoded
+0,stores,15,Men's Fashion,64
+1,"tv, audio & cameras",17,Camera Accessories,9
+2,home & kitchen,6,Bedroom Linen,8
+3,accessories,0,Fashion & Silver Jewellery,26
+4,"tv, audio & cameras",17,Home Entertainment Systems,41
+5,men's clothing,10,Shirts,77
+6,"tv, audio & cameras",17,Cameras,10
+7,women's clothing,18,Western Wear,99
+8,women's clothing,18,Ethnic Wear,25
+10,accessories,0,Watches,98
+11,industrial supplies,8,"Test, Measure & Inspect",89
+12,toys & baby products,16,Baby Products,2
+13,home & kitchen,6,Home Décor,40
+18,women's clothing,18,Lingerie & Nightwear,61
+19,beauty & health,3,Beauty & Grooming,7
+21,men's clothing,10,T-shirts & Polos,87
+23,bags & luggage,2,Backpacks,3
+25,appliances,1,Washing Machines,97
+27,accessories,0,Bags & Luggage,5
+29,beauty & health,3,Diet & Nutrition,23
+30,men's shoes,11,Casual Shoes,17
+32,men's shoes,11,Sports Shoes,81
+34,sports & fitness,14,Running,72
+36,women's clothing,18,Clothing,18
+38,men's shoes,11,Formal Shoes,31
+40,men's clothing,10,Jeans,51
+42,accessories,0,Sunglasses,86
+46,appliances,1,Kitchen & Home Appliances,58
+47,accessories,0,Jewellery,52
+48,sports & fitness,14,Cricket,20
+56,"tv, audio & cameras",17,Headphones,36
+57,appliances,1,Heating & Cooling Appliances,38
+68,stores,15,Sportswear,82
+69,car & motorbike,4,Car Electronics,14
+73,sports & fitness,14,Football,30
+76,women's shoes,19,Shoes,78
+77,car & motorbike,4,Car Parts,15
+79,bags & luggage,2,Wallets,96
+84,stores,15,Women's Fashion,100
+89,car & motorbike,4,Car & Bike Care,12
+92,accessories,0,Handbags & Clutches,35
+106,car & motorbike,4,Car Accessories,13
+118,sports & fitness,14,Cycling,21
+119,men's clothing,10,Innerwear,48
+120,toys & baby products,16,Nursing & Feeding,67
+121,sports & fitness,14,Yoga,101
+130,"tv, audio & cameras",17,Televisions,88
+141,sports & fitness,14,Strength Training,83
+158,home & kitchen,6,Home Improvement,43
+163,"tv, audio & cameras",17,Home Audio & Theater,39
+174,kids' fashion,9,Kids' Fashion,54
+181,sports & fitness,14,Camping & Hiking,11
+189,"tv, audio & cameras",17,Security Cameras,75
+191,kids' fashion,9,Kids' Clothing,53
+207,grocery & gourmet foods,5,"Coffee, Tea & Beverages",19
+219,industrial supplies,8,Lab & Scientific,60
+225,toys & baby products,16,"Baby Bath, Skin & Grooming",0
+235,appliances,1,Refrigerators,69
+239,sports & fitness,14,Fitness Accessories,29
+243,beauty & health,3,Make-up,63
+283,"tv, audio & cameras",17,Speakers,80
+294,bags & luggage,2,Travel Accessories,93
+316,kids' fashion,9,Baby Fashion,1
+325,car & motorbike,4,Motorbike Accessories & Parts,65
+341,women's shoes,19,Fashion Sandals,28
+346,industrial supplies,8,Janitorial & Sanitation Supplies,50
+347,home & kitchen,6,Home Furnishing,42
+369,home & kitchen,6,Home Storage,44
+397,toys & baby products,16,Diapers,22
+402,home & kitchen,6,Furniture,32
+413,grocery & gourmet foods,5,Snack Foods,79
+419,beauty & health,3,Health & Personal Care,37
+421,toys & baby products,16,Strollers & Prams,84
+439,sports & fitness,14,Badminton,4
+496,beauty & health,3,Personal Care Appliances,68
+517,beauty & health,3,Household Supplies,45
+607,accessories,0,Gold & Diamond Jewellery,34
+664,home & kitchen,6,Indoor Lighting,46
+674,kids' fashion,9,School Bags,74
+685,home & kitchen,6,Garden & Outdoors,33
+724,home & kitchen,6,Sewing & Craft Supplies,76
+733,home & kitchen,6,Kitchen & Dining,57
+752,women's shoes,19,Ballerinas,6
+782,toys & baby products,16,Toys & Games,91
+817,beauty & health,3,Luxury Beauty,62
+1002,music,12,Musical Instruments & Professional Audio,66
+1073,bags & luggage,2,Suitcases & Trolley Bags,85
+1100,pet supplies,13,Dog supplies,24
+1201,bags & luggage,2,Travel Duffles,94
+1216,industrial supplies,8,Industrial & Scientific Supplies,47
+1271,kids' fashion,9,Kids' Shoes,55
+1405,toys & baby products,16,STEM Toys Store,73
+1411,kids' fashion,9,Kids' Watches,56
+1897,stores,15,The Designer Boutique,90
+1989,home & kitchen,6,Kitchen Storage & Containers,59
+2152,sports & fitness,14,Cardio Equipment,16
+2612,bags & luggage,2,Rucksacks,71
+3824,beauty & health,3,Value Bazaar,95
+12060,stores,15,Fashion Sales & Deals,27
+22888,toys & baby products,16,Toys Gifting Store,92
+42895,"home, kitchen, pets",7,Refurbished & Open Box,70
