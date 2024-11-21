@@ -31,7 +31,7 @@ userid,productid,rating
 42896,tbp039545,3
 85050,cmb216388,4
 88661,hkt070694,5
-35380,tvc213688,5
+valid_users = self.user_data[self.user_data['userid'].isin(self.rating_data['userid'])],tvc213688,5
 15030,wcl204128,3
 33869,wcl083894,3
 29276,str029629,5
