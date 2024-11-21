@@ -6,8 +6,13 @@
   <component name="ChangeListManager">
     <list default="true" id="5838a908-f44b-4dd6-8a96-7eecf41b42b6" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/collab_interest.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/collab_interest.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/content_based.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/content_based.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Association.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/Association.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Recommendation_Interest.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/Recommendation_Interest.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Saved_model/recommendation_interest_model.pkl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/marketing_sample_for_walmart_com-walmart_com_product_review__20200701_20201231__5k_data.tsv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/recommendation_model.pkl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-product.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/user.csv" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,6 +54,12 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\RecommendModel" />
+      <recent name="D:\RecommendModel\Notebook" />
+    </key>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -86,6 +97,8 @@
       <workItem from="1731979688764" duration="10923000" />
       <workItem from="1732010725365" duration="1276000" />
       <workItem from="1732077800872" duration="6028000" />
+      <workItem from="1732122788007" duration="2943000" />
+      <workItem from="1732154609907" duration="1586000" />
     </task>
     <servers />
   </component>
