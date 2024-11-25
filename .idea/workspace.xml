@@ -5,20 +5,30 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5838a908-f44b-4dd6-8a96-7eecf41b42b6" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/ML_FastAPI_Docker_Heroku/app/SearchRecommendation.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Association.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/Notebook/Association.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Item_recommendation.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/Notebook/Item_recommendation.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Recommendation_Interest.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/Notebook/Recommendation_Interest.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Recommendation_Trend.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/Notebook/Recommendation_Trend.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Search_recommendation.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/Notebook/Search_recommendation.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/association_model.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/Notebook/association_model.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/collab_interest.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/Notebook/collab_interest.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/collab_recommendation.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/Notebook/collab_recommendation.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/collab_trend.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/Notebook/collab_trend.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/collaborative_filtering.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/Notebook/collaborative_filtering.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/content_based.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/Notebook/content_based.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/report.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/Notebook/report.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user_user.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/Notebook/user_user.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ML_FastAPI_Docker_Heroku/SearchRecommendation.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ML_FastAPI_Docker_Heroku/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/ML_FastAPI_Docker_Heroku/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ML_FastAPI_Docker_Heroku/model.py" beforeDir="false" afterPath="$PROJECT_DIR$/ML_FastAPI_Docker_Heroku/app/model.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ML_FastAPI_Docker_Heroku/search_recommendation_model.pkl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Notebook/Association.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/Notebook/Association.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Notebook/Recommendation_Interest.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/Notebook/Recommendation_Interest.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Notebook/Recommendation_Trend.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/Notebook/Recommendation_Trend.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Notebook/Search_recommendation.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/Notebook/Search_recommendation.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Notebook/association_model.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/Notebook/association_model.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Notebook/collab_interest.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/Notebook/collab_interest.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Notebook/collab_recommendation.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/Notebook/collab_recommendation.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Notebook/collab_trend.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/Notebook/collab_trend.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Notebook/content_based.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/Notebook/content_based.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Notebook/report.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/Notebook/report.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Notebook/user_user.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/Notebook/user_user.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/association_rules.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Notebook/association_rules.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/encoded_category.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Notebook/encoded_category.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ratings_test.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Notebook/ratings_test.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_data.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Notebook/test_data.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/train_data.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Notebook/train_data.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user_data.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Notebook/user_data.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/val_data.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Notebook/val_data.csv" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,27 +57,31 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Python.main.executor&quot;: &quot;Run&quot;,
-    &quot;Python.model.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/RecommendModel/ML_FastAPI_Docker_Heroku&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Python.SearchRecommendation.executor": "Run",
+    "Python.main.executor": "Run",
+    "Python.model.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "D:/RecommendModel/ML_FastAPI_Docker_Heroku/app",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\RecommendModel\ML_FastAPI_Docker_Heroku\app" />
       <recent name="D:\RecommendModel\ML_FastAPI_Docker_Heroku" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\RecommendModel\ML_FastAPI_Docker_Heroku" />
+      <recent name="D:\RecommendModel\ML_FastAPI_Docker_Heroku\app" />
       <recent name="D:\RecommendModel\Notebook" />
       <recent name="D:\RecommendModel\Saved_model" />
       <recent name="D:\RecommendModel" />
@@ -116,7 +130,10 @@
       <workItem from="1732239727434" duration="32000" />
       <workItem from="1732289805071" duration="2469000" />
       <workItem from="1732330163835" duration="8567000" />
-      <workItem from="1732374998940" duration="1325000" />
+      <workItem from="1732374998940" duration="1379000" />
+      <workItem from="1732413002663" duration="1338000" />
+      <workItem from="1732503881195" duration="11930000" />
+      <workItem from="1732535016482" duration="8224000" />
     </task>
     <servers />
   </component>
@@ -124,7 +141,8 @@
     <option name="version" value="3" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/RecommendModel$model.coverage" NAME="model Coverage Results" MODIFIED="1732375308289" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/ML_FastAPI_Docker_Heroku" />
-    <SUITE FILE_PATH="coverage/RecommendModel$main.coverage" NAME="main Coverage Results" MODIFIED="1732336222738" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/ML_FastAPI_Docker_Heroku" />
+    <SUITE FILE_PATH="coverage/RecommendModel$model.coverage" NAME="model Coverage Results" MODIFIED="1732536341950" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/ML_FastAPI_Docker_Heroku/app" />
+    <SUITE FILE_PATH="coverage/RecommendModel$main.coverage" NAME="main Coverage Results" MODIFIED="1732535374007" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/ML_FastAPI_Docker_Heroku" />
+    <SUITE FILE_PATH="coverage/RecommendModel$SearchRecommendation.coverage" NAME="SearchRecommendation Coverage Results" MODIFIED="1732535733492" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/ML_FastAPI_Docker_Heroku/app" />
   </component>
 </project>
