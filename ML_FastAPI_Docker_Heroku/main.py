@@ -11,18 +11,18 @@ rating = pd.read_csv("Notebook/ratings_test.csv")
 rule = pd.read_csv("Notebook/association_rules.csv")
 
 class SearchRecommendation:
-    def __init__(self, data):
-        self.data = data
-        self.data['processed_name'] = self.data['name'].str.lower()
+    def __init__(self, product):
+        self.product = product
+        self.product['processed_name'] = self.product['name'].str.lower()
         self.vectorizer = TfidfVectorizer(stop_words='english')
-        self.tfidf_matrix = self.vectorizer.fit_transform(self.data['processed_name'])
+        self.tfidf_matrix = self.vectorizer.fit_transform(self.product['processed_name'])
 
     def search(self, query, top_n=20):
         query_vector = self.vectorizer.transform([query.lower()])
         cosine_similarities = cosine_similarity(query_vector, self.tfidf_matrix).flatten()
         results_df = pd.DataFrame({
-            'id': self.data['id'].astype(str),
-            'name': self.data['name'],
+            'id': self.product['id'].astype(str),
+            'name': self.product['name'],
             'cosine_similarity': cosine_similarities
         })
         results_df = results_df.sort_values(by='cosine_similarity', ascending=False)
@@ -61,7 +61,7 @@ class RecommendTrendModel:
             similarity = self.calculate_similarity(user_info, other_user)
             similarities.append((other_user['userID'], similarity))
         similarities.sort(key=lambda x: x[1], reverse=True)
-        return [user[0] for user in similarities[:5]]
+        return [user_list[0] for user_list in similarities[:5]]
 
     def collaborative_filtering_recommendations(self, user_info, top_n=10):
         top5_similar_users = self.find_top5_similar_users(user_info)
@@ -143,7 +143,7 @@ class InterestRecommendationModel:
             similarity = self.calculate_similarity(user_info, other_user)
             similarities.append((other_user['userID'], similarity))
         similarities.sort(key=lambda x: x[1], reverse=True)
-        return [user[0] for user in similarities[:5]]
+        return [user_list[0] for user_list in similarities[:5]]
 
     def collaborative_filtering_recommendations(self, user_info, top_n=10):
         top5_similar_users = self.find_top5_similar_users(user_info)
@@ -204,8 +204,8 @@ class InterestRecommendation(BaseModel):
     interest: str
 
 class AssociationRecommendationModel:
-    def __init__(self, data, rules):
-        self.data = data
+    def __init__(self, product, rules):
+        self.product = product
         self.rules = rules
 
     def get_top_associated_categories(self, item_ids, n=3):
@@ -214,7 +214,7 @@ class AssociationRecommendationModel:
 
         for item_id in item_ids:
             # Retrieve item information
-            item_info = self.data[self.data['id'] == item_id]
+            item_info = self.product[self.product['id'] == item_id]
             if item_info.empty:
                 print(f"Item with ID {item_id} not found in dataset.")
                 continue
@@ -251,9 +251,9 @@ class AssociationRecommendationModel:
                 print(f"Invalid category format: {category}")
                 continue
             # Filter items within the given category
-            category_items = self.data[
-                (self.data['main_category'] == main_category) &
-                (self.data['sub_category'] == sub_category)
+            category_items = self.product[
+                (self.product['main_category'] == main_category) &
+                (self.product['sub_category'] == sub_category)
             ]
             # Get top items based on ratings
             top_rated_items = category_items.sort_values(by='ratings', ascending=False).head(top_n)
@@ -267,29 +267,66 @@ class AssociationRecommendationModel:
         top_rated_items = self.get_top_rated_items(top_associated_categories, top_n=top_n)
         return top_rated_items
 
-association=AssociationRecommendationModel(data,rule)
+associate_model=AssociationRecommendationModel(data,rule)
 class AssociationRecommendation(BaseModel):
+    item_ids: list[str]
+
+class ItemRecommendationModel:
+    def __init__(self, product):
+        self.product = product
+        self.product['processed_name'] = self.product['name'].str.lower()
+
+        self.vectorizer = TfidfVectorizer(stop_words='english')
+        self.tfidf_matrix = self.vectorizer.fit_transform(self.product['processed_name'])
+
+    def find_similar_items(self, item_id, top_n=20):
+        if item_id not in self.product['id'].values:
+            print(f"Item ID {item_id} not found in dataset.")
+            return []
+
+        item_index = self.product[self.product['id'] == item_id].index[0]
+        item_vector = self.tfidf_matrix[item_index]
+        cosine_similarities = cosine_similarity(item_vector, self.tfidf_matrix).flatten()
+        similar_indices = cosine_similarities.argsort()[-top_n-1:-1][::-1]
+        similar_items = self.product.iloc[similar_indices][['id','name',]]
+
+        similar_items_list = similar_items.to_dict(orient='records')
+
+        return similar_items_list
+
+class ItemRecommendation(BaseModel):
     id: str
 
+item_recommendation_model = ItemRecommendationModel(data)
 @app.post("/search")
-def get_search_recommendations(search_query: SearchQuery):
+async def get_search_recommendations(search_query: SearchQuery):
     results = search_model.search(search_query.query, top_n=search_query.top_n)
     return {"results": results}
+
 @app.post("/trend")
-def get_trend_recommendations(trend_recommendations: TrendRecommendation):
+async def get_trend_recommendations(trend_recommendations: TrendRecommendation):
     user_info = trend_recommendations.model_dump()
     results = trend_recommendation_model.recommend(user_info)
     return {"results": results}
+
 @app.post("/interest")
-def get_interest_recommendations(interest_recommendations: InterestRecommendation):
+async def get_interest_recommendations(interest_recommendations: InterestRecommendation):
     user_info=interest_recommendations.model_dump()
     results = interest_recommendation_model.recommend(user_info)
     return {"results": results}
+
+@app.post("/item")
+async def get_item_recommendation(item_recommendation: ItemRecommendation):
+    item_id=item_recommendation.id
+    result=item_recommendation_model.find_similar_items(item_id)
+    return {"results": result}
+
 @app.post("/association")
-def get_association_recommendations(association: AssociationRecommendation):
-    item_id = association.id
-    results = association.recommend(item_id)
+async def get_association_recommendations(associate_instances: AssociationRecommendation):
+    item_ids = associate_instances.item_ids
+    results = associate_model.recommend(item_ids)
     return {"results": results}
+
 @app.get("/")
 def read_root():
     return {"message": "Welcome to the Search Recommendation API!"}
