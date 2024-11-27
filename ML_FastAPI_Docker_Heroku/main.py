@@ -3,6 +3,7 @@ from pydantic import BaseModel
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 import pandas as pd
+import pickle
 
 app = FastAPI()
 data = pd.read_csv("Notebook/test_data.csv")
@@ -195,7 +196,8 @@ class InterestRecommendationModel:
         recommendations = collaborative_recommendations+interest_based_recommendations
         return recommendations
 
-interest_recommendation_model=InterestRecommendationModel(user,rating,data)
+interest_recommendation_model = InterestRecommendationModel(user,rating,data)
+
 class InterestRecommendation(BaseModel):
     age: int
     gender: str
@@ -298,6 +300,66 @@ class ItemRecommendation(BaseModel):
     id: str
 
 item_recommendation_model = ItemRecommendationModel(data)
+
+class CollabRecommendation:
+    def __init__(self, user_data, product_data, ratings_data):
+        self.user_data = user_data
+        self.product_data = product_data
+        self.ratings_data = ratings_data
+
+    def collaborative_filtering_recommendations(self, target_user_id, top_n=10):
+        target_user_id = int(target_user_id)
+
+        user_item_matrix = self.ratings_data.pivot_table(
+            index='userid', columns='productid', values='rating', aggfunc='mean'
+        ).fillna(0)
+
+        # Ensure target user exists
+        if target_user_id not in user_item_matrix.index:
+            raise ValueError(f"User ID {target_user_id} not found in the ratings data.")
+
+        target_user_ratings = user_item_matrix.loc[target_user_id]
+        rated_items = target_user_ratings[target_user_ratings > 0].index
+
+        similar_users = user_item_matrix.loc[
+            (user_item_matrix > 0).any(axis=1) & (user_item_matrix.index != target_user_id)
+            ]
+        similar_users_similarity = cosine_similarity(
+            target_user_ratings.values.reshape(1, -1), similar_users.values
+        )[0]
+
+        similar_users_indices = similar_users_similarity.argsort()[::-1]
+        recommended_items = []
+
+        for user_index in similar_users_indices[:top_n]:
+            similar_user_ratings = similar_users.iloc[user_index]
+            recommended_items.extend(similar_user_ratings[similar_user_ratings > 0].index)
+
+        recommended_items = [item for item in set(recommended_items) if item not in rated_items]
+        recommended_items_details = self.product_data[[
+            'id', 'name']][self.product_data['id'].isin(recommended_items)]
+
+        return recommended_items_details
+
+    def recommend(self, user_id, top_n=20):
+        return self.collaborative_filtering_recommendations(user_id, top_n=top_n)
+
+    def save(self, filepath):
+        """Save the model to a file."""
+        with open(filepath, 'wb') as f:
+            pickle.dump(self, f)
+
+    @staticmethod
+    def load(filepath):
+        """Load the model from a file."""
+        with open(filepath, 'rb') as f:
+            return pickle.load(f)
+
+collaborative_recommendation_model = CollabRecommendation(user,data,rating)
+
+class CollabRecommendation(BaseModel):
+    id: str
+
 @app.post("/search")
 async def get_search_recommendations(search_query: SearchQuery):
     results = search_model.search(search_query.query, top_n=search_query.top_n)
@@ -325,6 +387,12 @@ async def get_item_recommendation(item_recommendation: ItemRecommendation):
 async def get_association_recommendations(associate_instances: AssociationRecommendation):
     item_ids = associate_instances.item_ids
     results = associate_model.recommend(item_ids)
+    return {"results": results}
+
+@app.post("/collaborative")
+async def get_collaborative_recommendations(collab_recommendation: CollabRecommendation):
+    user_ids = collab_recommendation.user_ids
+    results = collaborative_recommendation_model.recommend(user_ids)
     return {"results": results}
 
 @app.get("/")
