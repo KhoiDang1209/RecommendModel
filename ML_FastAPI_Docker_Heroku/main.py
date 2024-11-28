@@ -3,13 +3,41 @@ from pydantic import BaseModel
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 import pandas as pd
-import pickle
+from pymongo.mongo_client import MongoClient
+uri = "mongodb+srv://khoibk123123:khoibk123@recommenddtb.4in6a.mongodb.net/?retryWrites=true&w=majority&appName=RecommendDTB"
 
-app = FastAPI()
-data = pd.read_csv("Notebook/test_data.csv")
-user = pd.read_csv("Notebook/user_data.csv")
-rating = pd.read_csv("Notebook/ratings_test.csv")
-rule = pd.read_csv("Notebook/association_rules.csv")
+client = MongoClient(uri)
+
+try:
+    client.admin.command('ping')
+    print("Pinged your deployment. You successfully connected to MongoDB!")
+except Exception as e:
+    print(e)
+db = client["Recommend"]
+
+user_collection = db["User"]
+rating_collection = db["Rating"]
+product_collection = db["Product"]
+association_collection = db["Association"]
+interest_collection = db["Interest"]
+user_df = pd.DataFrame(list(user_collection.find()))
+rating_df = pd.DataFrame(list(rating_collection.find()))
+product_df = pd.DataFrame(list(product_collection.find()))
+association_df = pd.DataFrame(list(association_collection.find()))
+interest_df=pd.DataFrame(list(interest_collection.find()))
+if '_id' in user_df.columns:
+    user_df.drop(columns=['_id'], inplace=True)
+
+if '_id' in rating_df.columns:
+    rating_df.drop(columns=['_id'], inplace=True)
+
+if '_id' in product_df.columns:
+    product_df.drop(columns=['_id'], inplace=True)
+
+if '_id' in association_df.columns:
+    association_df.drop(columns=['_id'], inplace=True)
+
+app=FastAPI()
 
 class SearchRecommendation:
     def __init__(self, product):
@@ -31,7 +59,7 @@ class SearchRecommendation:
 
 
 
-search_model = SearchRecommendation(data)
+search_model = SearchRecommendation(product_df)
 
 class SearchQuery(BaseModel):
     query: str
@@ -111,13 +139,9 @@ class RecommendTrendModel:
         recommendations = collaborative_recommendations + trending_recommendations
         return recommendations
 
-trend_recommendation_model=RecommendTrendModel(user,rating,data)
+trend_recommendation_model=RecommendTrendModel(user_df,rating_df,product_df)
 class TrendRecommendation(BaseModel):
-    age:int
-    gender:str
-    city:str
-    country:str
-
+    id:str
 class InterestRecommendationModel:
     def __init__(self, user_data, ratings_data, product_data):
         # Store the datasets in attributes
@@ -196,14 +220,10 @@ class InterestRecommendationModel:
         recommendations = collaborative_recommendations+interest_based_recommendations
         return recommendations
 
-interest_recommendation_model = InterestRecommendationModel(user,rating,data)
+interest_recommendation_model = InterestRecommendationModel(user_df,rating_df,product_df)
 
 class InterestRecommendation(BaseModel):
-    age: int
-    gender: str
-    city: str
-    country: str
-    interest: str
+    userID: str
 
 class AssociationRecommendationModel:
     def __init__(self, product, rules):
@@ -221,21 +241,19 @@ class AssociationRecommendationModel:
                 print(f"Item with ID {item_id} not found in dataset.")
                 continue
 
-            # Construct item category combination
             item_category = f"{item_info.iloc[0]['main_category']} - {item_info.iloc[0]['sub_category']}"
-            # Filter rules to find relevant antecedents
+
             relevant_rules = self.rules[self.rules['antecedents'].apply(lambda x: item_category in x)]
-            # If no rules, continue
+
             if relevant_rules.empty:
                 continue
 
-            # Sort rules and collect associated categories
             relevant_rules = relevant_rules.sort_values(by='lift', ascending=False).head(n)
             for _, row in relevant_rules.iterrows():
                 for category_set in [row['antecedents'], row['consequents']]:
-                    if isinstance(category_set, str):  # Ensure it's a string
-                        for category in category_set.split(", "):  # Split by delimiter
-                            if category != item_category:  # Exclude the original category
+                    if isinstance(category_set, str):
+                        for category in category_set.split(", "):
+                            if category != item_category:
                                 top_associated_categories.add(category)
         # Return the top N categories as a list
         top_categories_list = list(top_associated_categories)[:n]
@@ -269,7 +287,7 @@ class AssociationRecommendationModel:
         top_rated_items = self.get_top_rated_items(top_associated_categories, top_n=top_n)
         return top_rated_items
 
-associate_model=AssociationRecommendationModel(data,rule)
+associate_model=AssociationRecommendationModel(product_df,association_df)
 class AssociationRecommendation(BaseModel):
     item_ids: list[str]
 
@@ -299,9 +317,9 @@ class ItemRecommendationModel:
 class ItemRecommendation(BaseModel):
     id: str
 
-item_recommendation_model = ItemRecommendationModel(data)
+item_recommendation_model = ItemRecommendationModel(product_df)
 
-class CollabRecommendation:
+class CollabRecommendationModel:
     def __init__(self, user_data, product_data, ratings_data):
         self.user_data = user_data
         self.product_data = product_data
@@ -339,23 +357,12 @@ class CollabRecommendation:
         recommended_items_details = self.product_data[[
             'id', 'name']][self.product_data['id'].isin(recommended_items)]
 
-        return recommended_items_details
+        return recommended_items_details.head(top_n)
 
     def recommend(self, user_id, top_n=20):
         return self.collaborative_filtering_recommendations(user_id, top_n=top_n)
 
-    def save(self, filepath):
-        """Save the model to a file."""
-        with open(filepath, 'wb') as f:
-            pickle.dump(self, f)
-
-    @staticmethod
-    def load(filepath):
-        """Load the model from a file."""
-        with open(filepath, 'rb') as f:
-            return pickle.load(f)
-
-collaborative_recommendation_model = CollabRecommendation(user,data,rating)
+collaborative_recommendation_model = CollabRecommendationModel(user_df,product_df,rating_df)
 
 class CollabRecommendation(BaseModel):
     id: str
@@ -367,13 +374,39 @@ async def get_search_recommendations(search_query: SearchQuery):
 
 @app.post("/trend")
 async def get_trend_recommendations(trend_recommendations: TrendRecommendation):
-    user_info = trend_recommendations.model_dump()
+    user_id=trend_recommendations.id
+    user_record = user_collection.find_one({"userID": user_id})
+    if not user_record:
+        return {"error": "User or interest information not found for the given userID"}
+    user_info = {
+        "age": user_record["age"],
+        "gender": user_record["gender"],
+        "city": user_record["city"],
+        "country": user_record["country"],
+    }
     results = trend_recommendation_model.recommend(user_info)
     return {"results": results}
 
 @app.post("/interest")
 async def get_interest_recommendations(interest_recommendations: InterestRecommendation):
-    user_info=interest_recommendations.model_dump()
+    user_id = interest_recommendations.userID
+
+    user_record = user_collection.find_one({"userID": user_id})
+    interest_record = interest_collection.find_one({"userID": user_id})
+
+    if not user_record or not interest_record:
+        return {"error": "User or interest information not found for the given userID"}
+
+    # Combine the user and interest data
+    user_info = {
+        "age": user_record["age"],
+        "gender": user_record["gender"],
+        "city": user_record["city"],
+        "country": user_record["country"],
+        "interest": interest_record["interest"]
+    }
+
+    # Generate recommendations
     results = interest_recommendation_model.recommend(user_info)
     return {"results": results}
 
@@ -391,7 +424,7 @@ async def get_association_recommendations(associate_instances: AssociationRecomm
 
 @app.post("/collaborative")
 async def get_collaborative_recommendations(collab_recommendation: CollabRecommendation):
-    user_ids = collab_recommendation.user_ids
+    user_ids = collab_recommendation.id
     results = collaborative_recommendation_model.recommend(user_ids)
     return {"results": results}
 

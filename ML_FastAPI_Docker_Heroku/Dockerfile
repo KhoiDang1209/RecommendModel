@@ -6,8 +6,8 @@ COPY ./requirements.txt /ML_FastAPI_Docker_Heroku/requirements.txt
 
 RUN pip install --no-cache-dir --upgrade -r /ML_FastAPI_Docker_Heroku/requirements.txt
 
-COPY ../app /ML_FastAPI_Docker_Heroku/app
+COPY ./main.py /ML_FastAPI_Docker_Heroku/main.py
 
 EXPOSE 80
 
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "80"]
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "80"]
