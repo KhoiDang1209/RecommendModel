@@ -4,9 +4,14 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 import pandas as pd
 from pymongo.mongo_client import MongoClient
-uri = "mongodb+srv://khoibk123123:khoibk123@recommenddtb.4in6a.mongodb.net/?retryWrites=true&w=majority&appName=RecommendDTB"
+from dotenv import load_dotenv
+import os
 
-client = MongoClient(uri)
+load_dotenv()
+
+# Get MongoDB URI from environment variable
+MONGODB_URI = os.getenv("MONGODB_URI")
+client = MongoClient(MONGODB_URI)
 
 try:
     client.admin.command('ping')
@@ -63,7 +68,6 @@ search_model = SearchRecommendation(product_df)
 
 class SearchQuery(BaseModel):
     query: str
-    top_n: int = 10
 
 class RecommendTrendModel:
     def __init__(self, user_data, ratings_data, product_data):
@@ -140,8 +144,10 @@ class RecommendTrendModel:
         return recommendations
 
 trend_recommendation_model=RecommendTrendModel(user_df,rating_df,product_df)
+
 class TrendRecommendation(BaseModel):
     id:str
+
 class InterestRecommendationModel:
     def __init__(self, user_data, ratings_data, product_data):
         # Store the datasets in attributes
@@ -206,11 +212,15 @@ class InterestRecommendationModel:
         return top_recommendations[['productid', 'name']].values.tolist()
 
     def highest_rated_products_by_interest(self, user_info, top_n=20):
-        user_interest = list(map(int, user_info['interest'].split(',')))
+        # Ensure the 'interest' field is treated as a list
+        user_interest = list(map(int, user_info['interest']))  # Assuming the array contains integers
+        # Filter products based on the encoded main categories matching the user's interests
         filtered_products = self.product_data[self.product_data['main_category_encoded'].isin(user_interest)]
+        # Sort the filtered products by ratings and number of ratings
         top_products = filtered_products.sort_values(
             by=['ratings', 'no_of_ratings'], ascending=False
         ).head(top_n)
+        # Return the top products with id and name
         return top_products[['id', 'name']].values.tolist()
 
     def recommend(self, user_info, top_n=20):
@@ -223,7 +233,7 @@ class InterestRecommendationModel:
 interest_recommendation_model = InterestRecommendationModel(user_df,rating_df,product_df)
 
 class InterestRecommendation(BaseModel):
-    userID: str
+    id: str
 
 class AssociationRecommendationModel:
     def __init__(self, product, rules):
@@ -369,12 +379,13 @@ class CollabRecommendation(BaseModel):
 
 @app.post("/search")
 async def get_search_recommendations(search_query: SearchQuery):
-    results = search_model.search(search_query.query, top_n=search_query.top_n)
+    results = search_model.search(search_query.query)
     return {"results": results}
 
 @app.post("/trend")
 async def get_trend_recommendations(trend_recommendations: TrendRecommendation):
     user_id=trend_recommendations.id
+    user_id = str(user_id)
     user_record = user_collection.find_one({"userID": user_id})
     if not user_record:
         return {"error": "User or interest information not found for the given userID"}
@@ -389,8 +400,8 @@ async def get_trend_recommendations(trend_recommendations: TrendRecommendation):
 
 @app.post("/interest")
 async def get_interest_recommendations(interest_recommendations: InterestRecommendation):
-    user_id = interest_recommendations.userID
-
+    user_id = interest_recommendations.id
+    user_id=str(user_id)
     user_record = user_collection.find_one({"userID": user_id})
     interest_record = interest_collection.find_one({"userID": user_id})
 
@@ -403,7 +414,7 @@ async def get_interest_recommendations(interest_recommendations: InterestRecomme
         "gender": user_record["gender"],
         "city": user_record["city"],
         "country": user_record["country"],
-        "interest": interest_record["interest"]
+        "interest": interest_record["interests"]
     }
 
     # Generate recommendations

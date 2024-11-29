@@ -7,6 +7,7 @@ COPY ./requirements.txt /ML_FastAPI_Docker_Heroku/requirements.txt
 RUN pip install --no-cache-dir --upgrade -r /ML_FastAPI_Docker_Heroku/requirements.txt
 
 COPY ./main.py /ML_FastAPI_Docker_Heroku/main.py
+COPY ./.env /ML_FastAPI_Docker_Heroku/.env
 
 EXPOSE 80
 
