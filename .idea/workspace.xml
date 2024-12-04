@@ -7,10 +7,7 @@
     <list default="true" id="5838a908-f44b-4dd6-8a96-7eecf41b42b6" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ML_FastAPI_Docker_Heroku/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/ML_FastAPI_Docker_Heroku/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ML_FastAPI_Docker_Heroku/connection.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ML_FastAPI_Docker_Heroku/heroku.yml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/ML_FastAPI_Docker_Heroku/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/ML_FastAPI_Docker_Heroku/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Notebook/collab_recommendation.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/Notebook/collab_recommendation.ipynb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,11 +61,11 @@
       <recent name="D:\RecommendModel\ML_FastAPI_Docker_Heroku" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\RecommendModel\Notebook\NewData" />
       <recent name="D:\RecommendModel\ML_FastAPI_Docker_Heroku" />
       <recent name="D:\RecommendModel\ML_FastAPI_Docker_Heroku\app" />
       <recent name="D:\RecommendModel\Notebook" />
       <recent name="D:\RecommendModel\Saved_model" />
-      <recent name="D:\RecommendModel" />
     </key>
   </component>
   <component name="SharedIndexes">
@@ -122,6 +119,7 @@
       <workItem from="1732929933213" duration="7847000" />
       <workItem from="1732952071974" duration="2616000" />
       <workItem from="1732970147572" duration="5980000" />
+      <workItem from="1733276595043" duration="6742000" />
     </task>
     <servers />
   </component>
